@@ -1,0 +1,25 @@
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const prefix = '!'; // Change this to your desired prefix
+
+// Event listener for when the bot is ready
+client.on('ready', () => {
+    console.log('Bot is ready');
+});
+
+// Event listener for when a member joins voice chat
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (newState.channel && newState.member.user.bot === false) {
+        const member = newState.member;
+        const voiceChannel = newState.channel;
+        const channelName = voiceChannel.name;
+        const roleName = 'Developer'; // Change this to your desired role name
+
+        if (member.roles.cache.some(role => role.name === roleName)) {
+            member.setNickname('Developer');
+        }
+    }
+});
+
+// Log in to Discord with your app's token
+client.login('YOUR_DISCORD_BOT_TOKEN');
